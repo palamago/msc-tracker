@@ -1,0 +1,13 @@
+html,body,.container-fluid{
+	height: 100%;
+}
+#map {
+	height: 500px;
+	width: 100%;
+}
+
+h1{
+	position: absolute;
+    z-index: 100;
+    right: 20px;
+}
