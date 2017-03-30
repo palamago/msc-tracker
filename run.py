@@ -20,6 +20,7 @@ def md5(fname):
 ##### IMAGES
 
 def getImages(coordinates):
+	print 'getImages'
 	urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web1.jpg", "images/proa-temp.jpg")
 	urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web2.jpg", "images/popa-temp.jpg")
 
@@ -29,6 +30,7 @@ def getImages(coordinates):
 		urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web2.jpg", "images/popa-last.jpg")
 		copyfile("images/proa-last.jpg", "images/proa/"+ts+".jpg")
 		copyfile("images/popa-last.jpg", "images/popa/"+ts+".jpg")
+		saveCSV(coordinates)
 
 	#compare && copy
 	if md5("images/proa-temp.jpg") != md5("images/proa-last.jpg"):
@@ -45,12 +47,14 @@ def getLastImage(side):
 
 ##### COORDINATES
 def getCoordinates():
+	print 'getCoordinates'
 	html_doc = urllib.urlopen('https://www.msccruceros.es/es-es/Barcos-De-Crucero/MSC-Orchestra.aspx').read()
 	soup = BeautifulSoup(html_doc, 'html.parser')
 	coordinates = soup.find_all("span", class_="coord")
 	return {'lat':coordinates[0].get_text(),'lng':coordinates[1].get_text()}
 
 def saveCSV(coords):
+	print '* saveCSV'
 	with open('data/tracking.csv','a') as f:
 		writer=csv.writer(f)
 		writer.writerow([ts,coords['lat'],coords['lng'],getLastImage('proa'),getLastImage('popa')])
@@ -58,8 +62,12 @@ def saveCSV(coords):
 ###RUN! 
 ct = time.time()
 ts = datetime.datetime.fromtimestamp(ct).strftime('%Y-%m-%d_%H-%M-%S')
-coord = getCoordinates()   	
+print 'Inicia: '+ts
+coord = getCoordinates()
+print coord
 getImages(coord)
 
+print 'fin'
+print '---------'
 
 sys.exit()
