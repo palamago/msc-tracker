@@ -31,7 +31,7 @@ def getImages(coordinates):
 		copyfile("images/popa-last.jpg", "images/popa/"+ts+".jpg")
 
 	#compare && copy
-	if md5("images/proa-temp.jpg") == md5("images/proa-last.jpg"):
+	if md5("images/proa-temp.jpg") != md5("images/proa-last.jpg"):
 		copyfile("images/proa-temp.jpg", "images/proa-last.jpg")
 		copyfile("images/proa-last.jpg", "images/proa/"+ts+".jpg")
 		saveCSV(coordinates)
