@@ -196,11 +196,16 @@ var styles = [
 function initMap() {
   
   d3.csv("data/tracking.csv", function(tracks){
+
+    tracks = tracks.map(function(t){
+      t.lat = parseFloat(t.lat);
+      t.lng = parseFloat(t.lng);
+      t.date = t.date.split('_')[0] + ' ' + t.date.split('_')[1].replace(/-/g, ":");
+      return t;
+    });
+
     //position
     var position = tracks.reverse()[0];
-    position.lat = parseFloat(position.lat);
-    position.lng = parseFloat(position.lng);
-    position.date = position.date.split('_')[0] + ' ' + position.date.split('_')[1].replace(/-/g, ":");
     $('#map').height($(window).height());
     
     //map
@@ -240,6 +245,18 @@ function initMap() {
     marker.addListener('click', function() {
       infowindow.open(map, marker);
     });
+
+    //polilyne
+    var course = new google.maps.Polyline({
+      path: tracks,
+      geodesic: true,
+      strokeColor: '#f7685c',
+      strokeOpacity: 1.0,
+      strokeWeight: 3
+    });
+
+    course.setMap(map);
+
   });
 
 }
