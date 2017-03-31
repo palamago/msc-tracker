@@ -7,7 +7,7 @@ $(document).ready(function(){
     });
 
     var dataSet = tracks.filter(function(c){
-      return (c.proa);
+      return (c.proa!='');
     }).map(function(t){
       return [t.date,t.lat,t.lng,t.proa,t.popa,t.md5_proa,t.md5_popa]
     });
@@ -19,6 +19,7 @@ $(document).ready(function(){
       deferRender:    true,
       scroller:       true,
       responsive: true,
+      "order": [[ 0, "desc" ]],
       "columnDefs": [
             {
                 // The `data` parameter refers to the data for the cell (defined by the
