@@ -18,3 +18,17 @@ html,body,.container-fluid{
     color: white;
     text-align: center;
 }
+
+#footer{
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    bottom: 0px;
+    background: #000;
+    border-top: 1px solid #ccc;
+}
+#footer p{
+    text-align: center;
+    color: #fff;
+    margin-top: 5px;
+}
