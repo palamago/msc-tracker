@@ -7,6 +7,7 @@ import datetime
 import time
 import csv
 import glob
+import random
 from bs4 import BeautifulSoup
 from shutil import copyfile
 from collections import deque
@@ -74,7 +75,7 @@ def getCoordinates():
 	global lastRow
 	global coordinatesObj
 
-	html_doc = urllib.urlopen('https://www.msccruceros.es/es-es/Barcos-De-Crucero/MSC-Orchestra.aspx').read()
+	html_doc = urllib.urlopen('https://www.msccruceros.es/es-es/Barcos-De-Crucero/MSC-Orchestra.aspx?t='+str(random.randint(1,10000))).read()
 	soup = BeautifulSoup(html_doc, 'html.parser')
 	coordinates = soup.find_all("span", class_="coord")
 	coordinatesObj = {'lat':coordinates[0].get_text(),'lng':coordinates[1].get_text()}
