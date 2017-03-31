@@ -1,3 +1,3 @@
 import os.path
 
-os.system("python spider.py")
+os.system("python /var/www/msc-tracker/spider.py")
