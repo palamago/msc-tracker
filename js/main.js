@@ -195,7 +195,7 @@ var styles = [
 
 function initMap() {
   
-  d3.csv("data/tracking.csv", function(tracks){
+  d3.csv("data/tracking.csv?t="+Date.now(), function(tracks){
 
     tracks = tracks.map(function(t){
       t.lat = parseFloat(t.lat);

@@ -36,11 +36,11 @@ def getImages(coordinates):
 	if md5("images/proa-temp.jpg") != md5("images/proa-last.jpg"):
 		copyfile("images/proa-temp.jpg", "images/proa-last.jpg")
 		copyfile("images/proa-last.jpg", "images/proa/"+ts+".jpg")
-		saveCSV(coordinates)
 
 	if md5("images/popa-temp.jpg") != md5("images/popa-last.jpg"):
 		copyfile("images/popa-temp.jpg", "images/popa-last.jpg")
 		copyfile("images/popa-last.jpg", "images/popa/"+ts+".jpg")
+		saveCSV(coordinates)
 
 def getLastImage(side):
 	return max(glob.iglob('images/'+side+'/*.jpg'), key=os.path.getctime)
