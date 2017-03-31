@@ -235,15 +235,21 @@ function initMap() {
 
 
     //infowindow
-    var infowindow = new google.maps.InfoWindow({
+    /*var infowindow = new google.maps.InfoWindow({
       content: '<p><strong>Actualizado: </strong>El '+position.date.replace(' ',' a las ')+'</p>'+
                '<p><strong>Latitud: </strong>'+position.lat+'   <strong>Longitud: </strong>'+position.lng+'</p>'+
                '<p><strong>Proa: </strong><img style="width:100%" src="'+position.proa+'"/></p>'+
                '<p><strong>Popa: </strong><img style="width:100%" src="'+position.popa+'"/></p>'
-    });
+    });*/
 
     marker.addListener('click', function() {
-      infowindow.open(map, marker);
+      var content = '<p><strong>Actualizado: </strong>El '+position.date.replace(' ',' a las ')+'</p>'+
+               '<p><strong>Latitud: </strong>'+position.lat+'   <strong>Longitud: </strong>'+position.lng+'</p>'+
+               '<p><strong>Vista proa: </strong><img style="width:100%" src="'+position.proa+'"/></p>'+
+               '<p><strong>Vista popa: </strong><img style="width:100%" src="'+position.popa+'"/></p>';
+      //infowindow.open(map, marker);
+      $('#details').find('.modal-body').html(content);
+      $('#details').modal('show');
     });
 
     //polilyne
