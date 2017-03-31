@@ -9,6 +9,7 @@ import csv
 import glob
 from bs4 import BeautifulSoup
 from shutil import copyfile
+from collections import deque
 
 def md5(fname):
     hash_md5 = hashlib.md5()
@@ -17,55 +18,95 @@ def md5(fname):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
+def get_last_row():
+    with open('data/tracking.csv', 'r') as f:
+        try:
+            lastrow = deque(csv.reader(f), 1)[0]
+        except IndexError:  # empty file
+            lastrow = None
+        return lastrow
+
 ##### IMAGES
 
-def getImages(coordinates):
-	print 'getImages'
-	urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web1.jpg", "images/proa-temp.jpg")
-	urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web2.jpg", "images/popa-temp.jpg")
+global lastRow 
+lastRow = get_last_row()
+
+global md5Obj
+def getImages():
+	global lastRow
+	global md5Obj
+
+	print '- getImages'
+	changePopa = False
+	changeProa = False
 
 	#First run
-	if os.path.isfile("images/proa-last.jpg")==False :
-		urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web1.jpg", "images/proa-last.jpg")
-		urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web2.jpg", "images/popa-last.jpg")
-		copyfile("images/proa-last.jpg", "images/proa/"+ts+".jpg")
-		copyfile("images/popa-last.jpg", "images/popa/"+ts+".jpg")
-		saveCSV(coordinates)
+	if lastRow is None :
+		urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web1.jpg", "images/proa-temp.jpg")
+		urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web2.jpg", "images/popa-temp.jpg")
+		copyfile("images/proa-temp.jpg", "images/proa/"+ts+".jpg")
+		copyfile("images/popa-temp.jpg", "images/popa/"+ts+".jpg")
+		changeProa = True
+		changePopa = True
+	else:
+		urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web1.jpg", "images/proa-temp.jpg")
+		urllib.urlretrieve("https://www.msccruceros.es/maps/MSCORCHESTRA/web2.jpg", "images/popa-temp.jpg")
 
-	#compare && copy
-	if md5("images/proa-temp.jpg") != md5("images/proa-last.jpg"):
-		copyfile("images/proa-temp.jpg", "images/proa-last.jpg")
-		copyfile("images/proa-last.jpg", "images/proa/"+ts+".jpg")
+		md5Obj = {'proa':md5("images/proa-temp.jpg"),'popa':md5("images/popa-temp.jpg")}
 
-	if md5("images/popa-temp.jpg") != md5("images/popa-last.jpg"):
-		copyfile("images/popa-temp.jpg", "images/popa-last.jpg")
-		copyfile("images/popa-last.jpg", "images/popa/"+ts+".jpg")
-		saveCSV(coordinates)
+		#compare && copy
+		if md5Obj['proa'] != lastRow[5]:
+			copyfile("images/proa-temp.jpg", "images/proa/"+ts+".jpg")
+			changeProa = True
+
+		if md5Obj['popa'] != lastRow[6]:
+			copyfile("images/popa-temp.jpg", "images/popa/"+ts+".jpg")
+			changePopa = True
+
+	
+	return changePopa or changeProa
 
 def getLastImage(side):
 	return max(glob.iglob('images/'+side+'/*.jpg'), key=os.path.getctime)
 
 ##### COORDINATES
+global coordinatesObj
 def getCoordinates():
-	print 'getCoordinates'
+	global lastRow
+	global coordinatesObj
+	print '- getCoordinates'
 	html_doc = urllib.urlopen('https://www.msccruceros.es/es-es/Barcos-De-Crucero/MSC-Orchestra.aspx').read()
 	soup = BeautifulSoup(html_doc, 'html.parser')
 	coordinates = soup.find_all("span", class_="coord")
-	return {'lat':coordinates[0].get_text(),'lng':coordinates[1].get_text()}
+	coordinatesObj = {'lat':coordinates[0].get_text(),'lng':coordinates[1].get_text()}
 
-def saveCSV(coords):
-	print '* saveCSV'
+	if lastRow is None :
+		return True
+	else:
+		return (lastRow[1]!=coordinatesObj['lat'] or lastRow[2]!=coordinatesObj['lng'])
+
+def saveCSV():
+	global coordinatesObj
+	print '- saveCSV'
 	with open('data/tracking.csv','a') as f:
 		writer=csv.writer(f)
-		writer.writerow([ts,coords['lat'],coords['lng'],getLastImage('proa'),getLastImage('popa')])
+		writer.writerow([ts,coordinatesObj['lat'],coordinatesObj['lng'],getLastImage('proa'),getLastImage('popa'),md5Obj['proa'],md5Obj['popa']])
 
 ###RUN! 
 ct = time.time()
 ts = datetime.datetime.fromtimestamp(ct).strftime('%Y-%m-%d_%H-%M-%S')
 print 'Inicia: '+ts
-coord = getCoordinates()
-print coord
-getImages(coord)
+
+changeCoords = getCoordinates()
+print 'changeCoords? '
+print changeCoords
+
+changeImages = getImages()
+print 'changeImages? '
+print changeImages
+
+if (changeImages or changeCoords):
+	saveCSV()
 
 print 'fin'
 print '---------'
