@@ -214,9 +214,8 @@ function initMap() {
     var mapOptions = {
       zoom: 5,
       center: position,
-      mapTypeControlOptions: {
-        mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
-      }
+      mapTypeControl: false,
+      disableDefaultUI: true
     };
     var map = new google.maps.Map(document.getElementById('map'), mapOptions);
     map.mapTypes.set('map_style', styledMap);

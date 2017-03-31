@@ -36,7 +36,6 @@ def getImages():
 	global lastRow
 	global md5Obj
 
-	print '- getImages'
 	changePopa = False
 	changeProa = False
 
@@ -74,7 +73,7 @@ global coordinatesObj
 def getCoordinates():
 	global lastRow
 	global coordinatesObj
-	print '- getCoordinates'
+
 	html_doc = urllib.urlopen('https://www.msccruceros.es/es-es/Barcos-De-Crucero/MSC-Orchestra.aspx').read()
 	soup = BeautifulSoup(html_doc, 'html.parser')
 	coordinates = soup.find_all("span", class_="coord")
@@ -87,7 +86,7 @@ def getCoordinates():
 
 def saveCSV():
 	global coordinatesObj
-	print '- saveCSV'
+
 	with open('data/tracking.csv','a') as f:
 		writer=csv.writer(f)
 		writer.writerow([ts,coordinatesObj['lat'],coordinatesObj['lng'],getLastImage('proa'),getLastImage('popa'),md5Obj['proa'],md5Obj['popa']])
@@ -95,20 +94,13 @@ def saveCSV():
 ###RUN! 
 ct = time.time()
 ts = datetime.datetime.fromtimestamp(ct).strftime('%Y-%m-%d_%H-%M-%S')
-print 'Inicia: '+ts
 
 changeCoords = getCoordinates()
-print 'changeCoords? '
-print changeCoords
 
 changeImages = getImages()
-print 'changeImages? '
-print changeImages
 
 if (changeImages or changeCoords):
 	saveCSV()
 
-print 'fin'
-print '---------'
 
 sys.exit()
