@@ -55,6 +55,9 @@ p.data-label{
     text-align: center;
     padding: 10px;
     margin-bottom: 10px;
+    -webkit-box-shadow: 1px 1px 0px 0px rgba(255, 255, 255, 1);
+    -moz-box-shadow:    1px 1px 0px 0px rgba(255, 255, 255, 1);
+    box-shadow:         1px 1px 0px 0px rgba(255, 255, 255, 1);
 }
 
 #temp {
@@ -92,6 +95,7 @@ p.data-label{
     margin-top: 5px;
     font-family: 'Fjalla One', sans-serif;
     text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+    font-size: 20px;
 }
 
 /*==========  Non-Mobile First Method  ==========*/
@@ -141,6 +145,10 @@ p.data-label{
         font-size: 30px;
     }
     p.data-label{
+        font-size: 15px;
+    }
+
+    #footer p{
         font-size: 15px;
     }
 }
