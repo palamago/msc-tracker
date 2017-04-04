@@ -193,6 +193,43 @@ var styles = [
   }
 ];
 
+/*functions*/
+function calcTime(offset) {
+    var d = new Date();
+    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+    var nd = new Date(utc + (1000*offset));
+    return (nd.getHours() < 10 ? '0' : '') + nd.getHours()+':'+(nd.getMinutes() < 10 ? '0' : '') + nd.getMinutes();
+}
+
+//from https://gist.github.com/basarat/4670200
+//given "0-360" returns the nearest cardinal direction "N/NE/E/SE/S/SW/W/NW/N" 
+function getCardinal(angle) {
+    //easy to customize by changing the number of directions you have 
+    var directions = 8;
+    
+    var degree = 360 / directions;
+    angle = angle + degree/2;
+    
+    if (angle >= 0 * degree && angle < 1 * degree)
+        return "norte";
+    if (angle >= 1 * degree && angle < 2 * degree)
+        return "noreste";
+    if (angle >= 2 * degree && angle < 3 * degree)
+        return "este";
+    if (angle >= 3 * degree && angle < 4 * degree)
+        return "sudeste";
+    if (angle >= 4 * degree && angle < 5 * degree)
+        return "sur";
+    if (angle >= 5 * degree && angle < 6 * degree)
+        return "suroeste";
+    if (angle >= 6 * degree && angle < 7 * degree)
+        return "oeste";
+    if (angle >= 7 * degree && angle < 8 * degree)
+        return "noroeste";
+    //Should never happen: 
+    return "norte";
+}
+
 function initMap() {
   
   d3.csv("data/tracking.csv?t="+Date.now(), function(tracks){
@@ -237,23 +274,16 @@ function initMap() {
     var urlWeather = 'http://api.openweathermap.org/data/2.5/weather?lat='+position.lat+'&lon='+position.lng+'&appid=a394a6fbb161a4cac37416ccd5480743&lang=es&units=metric&callback=?';
     $.getJSON( urlWeather, function( data ) {
       $('#temp .data').html(parseInt(data.main.temp)+'º C');
-      $('#hum .data').html(parseInt(data.main.humidity)+'%');
+      $('#temp .data-label').html('Temperatura en '+data.name);
+
+      $('#wind .data').html((parseInt(data.wind.speed)*3.6).toFixed(0)+' km/h');
+      $('#wind .data-label').html('Viento '+getCardinal(data.wind.deg));
       if(data.weather[0]){
         $('#icon .data').html('<img class="img-responsive" src="http://openweathermap.org/img/w/'+data.weather[0].icon+'.png"/>');
-        $('#icon .data-label').html(data.weather[0].description); 
+        $('#icon .data-label').html(data.weather[0].description);
       }
       console.log(data);
     });
-
-    //icon
-    //http://openweathermap.org/img/w/10d.png
-
-    function calcTime(offset) {
-        var d = new Date();
-        var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-        var nd = new Date(utc + (1000*offset));
-        return (nd.getHours() < 10 ? '0' : '') + nd.getHours()+':'+(nd.getMinutes() < 10 ? '0' : '') + nd.getMinutes();
-    }
 
     //hora
     //https://maps.googleapis.com/maps/api/timezone/json?location=39.6034810,-119.6822510&timestamp=1491245642752&key=AIzaSyCBg51hxe-fK9ML6owYNyAUY_GVkFncMwY&language=es

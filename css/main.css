@@ -14,29 +14,57 @@ html,body,.container-fluid{
 #title h1{
     background: rgba(255,255,255,0.2);
     padding: 10px;
-    color: white;
+    color: #71B340;
     text-align: center;
     font-family: 'Fjalla One', sans-serif;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+}
+
+p.data{
+    font-size: 50px;
+    color: #71B340;
+    font-family: 'Fjalla One', sans-serif;
+    margin: 0px;
+    padding: 0px;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+}
+
+p.data-label{
+    font-size: 30px;
+    color: #f7685c;
+    font-family: 'Fjalla One', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2.2px;
+    margin: 0px;
+    padding: 0px;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
 }
 
 #icon {
     position: absolute;
     max-width: 50%;
     left: 20px;
-    top: 90px;
+    bottom: 50px;
 }
 
-#icon img{
+#icon p.data{
+    background-color: #71B340;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 #temp {
     position: absolute;
     max-width: 50%;
     left: 20px;
-    bottom: 50px;
+    top: 90px;
 }
 
-#hum {
+#wind {
     position: absolute;
     max-width: 50%;
     right: 20px;
@@ -50,24 +78,6 @@ html,body,.container-fluid{
     top: 90px;
 }
 
-p.data{
-    font-size: 50px;
-    color: #fff;
-    font-family: 'Fjalla One', sans-serif;
-    margin: 0px;
-    padding: 0px;
-}
-
-p.data-label{
-    font-size: 10px;
-    color: #ddd;
-    font-family: 'Fjalla One', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2.2px;
-    margin: 0px;
-    padding: 0px;
-}
-
 #footer{
     position: absolute;
     z-index: 100;
@@ -78,9 +88,10 @@ p.data-label{
 }
 #footer p{
     text-align: center;
-    color: #fff;
+    color: #f7685c;
     margin-top: 5px;
     font-family: 'Fjalla One', sans-serif;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
 }
 
 /*==========  Non-Mobile First Method  ==========*/
@@ -112,7 +123,7 @@ p.data-label{
     }
 
     #icon {
-        top: 45px;
+        bottom: 45px;
         left: 10px;
     }
 
@@ -122,12 +133,15 @@ p.data-label{
     }
 
     #temp {
-        bottom: 45px;
+        top: 45px;
         left: 10px;
     }
 
     p.data{
         font-size: 30px;
+    }
+    p.data-label{
+        font-size: 15px;
     }
 }
 
