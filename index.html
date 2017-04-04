@@ -13,6 +13,8 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+    <link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">
+
     <link rel="stylesheet" href="css/main.css"/>
 
 
@@ -27,12 +29,29 @@
     <div class="container-fluid">
       <div id="title" class="row">  
         <div class="col-md-12">
-          <h1 class="text-center">MSC Orchestra Tracker <a href="data.html" class="btn btn-sm btn-default">Ver data</a></h1>
+          <h1 class="text-center">MSC Orchestra Tracker</h1>
         </div>
       </div>
       <div class="row">
           <div id="map">
           </div>
+      </div>
+      <div id="icon" class="data-container">
+        <p class="data text-right">
+        </p>
+        <p class="data-label text-left"></p>
+      </div>
+      <div id="date" class="data-container">
+        <p class="data text-right"></p>
+        <p class="data-label text-right"></p>
+      </div>
+      <div id="temp" class="data-container">
+        <p class="data text-left"></p>
+        <p class="data-label text-left">Temperatura</p>
+      </div>
+      <div id="hum" class="data-container">
+        <p class="data text-right"></p>
+        <p class="data-label text-right">Humedad</p>
       </div>
       <div id="footer" class="row">  
         <div class="col-md-12">
@@ -53,6 +72,7 @@
             
           </div>
           <div class="modal-footer">
+            <a class="btn btn-default" href="data.html">Ver datos anteriores</a>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>

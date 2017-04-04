@@ -12,11 +12,60 @@ html,body,.container-fluid{
     width: 100%;
 }
 #title h1{
-    text-shadow: 1px 1px 2px white;
     background: rgba(255,255,255,0.2);
     padding: 10px;
     color: white;
     text-align: center;
+    font-family: 'Fjalla One', sans-serif;
+}
+
+#icon {
+    position: absolute;
+    max-width: 50%;
+    left: 20px;
+    top: 90px;
+}
+
+#icon img{
+}
+
+#temp {
+    position: absolute;
+    max-width: 50%;
+    left: 20px;
+    bottom: 50px;
+}
+
+#hum {
+    position: absolute;
+    max-width: 50%;
+    right: 20px;
+    bottom: 50px;
+}
+
+#date {
+    position: absolute;
+    max-width: 50%;
+    right: 20px;
+    top: 90px;
+}
+
+p.data{
+    font-size: 50px;
+    color: #fff;
+    font-family: 'Fjalla One', sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+p.data-label{
+    font-size: 10px;
+    color: #ddd;
+    font-family: 'Fjalla One', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2.2px;
+    margin: 0px;
+    padding: 0px;
 }
 
 #footer{
@@ -31,4 +80,64 @@ html,body,.container-fluid{
     text-align: center;
     color: #fff;
     margin-top: 5px;
+    font-family: 'Fjalla One', sans-serif;
 }
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    #title h1{
+        font-size: 20px;
+        margin: 0px;
+    }
+
+    #title .col-md-12{
+        padding: 0px;
+    }
+
+    #date {
+        top: 45px;
+        right: 10px;
+    }
+
+    #icon {
+        top: 45px;
+        left: 10px;
+    }
+
+    #hum {
+        bottom: 45px;
+        right: 10px;
+    }
+
+    #temp {
+        bottom: 45px;
+        left: 10px;
+    }
+
+    p.data{
+        font-size: 30px;
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+
+}
+
+/* Custom, iPhone Retina */ 
+@media only screen and (max-width : 320px) {
+    
+}
+

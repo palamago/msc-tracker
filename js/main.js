@@ -232,6 +232,37 @@ function initMap() {
       map: map
     });
 
+    //clima
+    //http://api.openweathermap.org/data/2.5/weather?lat=-8.048022&lon=-34.867175&appid=a394a6fbb161a4cac37416ccd5480743&lang=es&units=metric
+    var urlWeather = 'http://api.openweathermap.org/data/2.5/weather?lat='+position.lat+'&lon='+position.lng+'&appid=a394a6fbb161a4cac37416ccd5480743&lang=es&units=metric&callback=?';
+    $.getJSON( urlWeather, function( data ) {
+      $('#temp .data').html(parseInt(data.main.temp)+'º C');
+      $('#hum .data').html(parseInt(data.main.humidity)+'%');
+      if(data.weather[0]){
+        $('#icon .data').html('<img class="img-responsive" src="http://openweathermap.org/img/w/'+data.weather[0].icon+'.png"/>');
+        $('#icon .data-label').html(data.weather[0].description); 
+      }
+      console.log(data);
+    });
+
+    //icon
+    //http://openweathermap.org/img/w/10d.png
+
+    function calcTime(offset) {
+        var d = new Date();
+        var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+        var nd = new Date(utc + (1000*offset));
+        return (nd.getHours() < 10 ? '0' : '') + nd.getHours()+':'+(nd.getMinutes() < 10 ? '0' : '') + nd.getMinutes();
+    }
+
+    //hora
+    //https://maps.googleapis.com/maps/api/timezone/json?location=39.6034810,-119.6822510&timestamp=1491245642752&key=AIzaSyCBg51hxe-fK9ML6owYNyAUY_GVkFncMwY&language=es
+    var timestamp = Date.now() / 1000;
+    var urlTime = 'https://maps.googleapis.com/maps/api/timezone/json?location='+position.lat+','+position.lng+'&timestamp='+timestamp+'&key=AIzaSyCBg51hxe-fK9ML6owYNyAUY_GVkFncMwY&language=es'; 
+    $.getJSON( urlTime, function( data ) {
+      $('#date .data').html(calcTime(data.rawOffset + data.dstOffset));
+      $('#date .data-label').html(data.timeZoneName);
+    });
 
     //infowindow
     /*var infowindow = new google.maps.InfoWindow({
