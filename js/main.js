@@ -272,6 +272,8 @@ function setTime(position){
 
 function initMap() {
   
+  $('#map').height($(window).height());
+  
   //map
   var styledMap = new google.maps.StyledMapType(styles,{name: "Mapa oscuro"});
   var mapOptions = {
@@ -294,7 +296,7 @@ function initMap() {
 
     //position
     var position = tracks.reverse()[0];
-    $('#map').height($(window).height());
+    
     
     map.setCenter(position);
 
@@ -311,7 +313,6 @@ function initMap() {
 
     setWeather(position);
     setTime(position);
-
 
     //infowindow
     /*var infowindow = new google.maps.InfoWindow({
