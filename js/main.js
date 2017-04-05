@@ -235,8 +235,9 @@ function setWeather(position){
   //http://api.openweathermap.org/data/2.5/weather?lat=-8.048022&lon=-34.867175&appid=a394a6fbb161a4cac37416ccd5480743&lang=es&units=metric
   var urlWeather = 'http://api.openweathermap.org/data/2.5/weather?lat='+position.lat+'&lon='+position.lng+'&appid=a394a6fbb161a4cac37416ccd5480743&lang=es&units=metric&callback=?';
   $.getJSON( urlWeather, function( data ) {
+    console.log(data);
     $('#temp .data').html(parseInt(data.main.temp)+'º C');
-    $('#temp .data-label').html('Temperatura en '+data.name);
+    $('#temp .data-label').html((data.name)?'Temperatura en '+data.name:'Alta mar');
 
     $('#wind .data').html((parseInt(data.wind.speed)*3.6).toFixed(0)+' km/h');
     $('#wind .data-label').html('Viento '+getCardinal(data.wind.deg));
