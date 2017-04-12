@@ -270,6 +270,18 @@ function setTime(position){
 
 }
 
+function removeDuplicates(tracks){
+  var exists = {};
+  return tracks.filter(function(t){
+    if(exists[t.lat+'-'+t.lng]){
+      return false
+    } else {
+      exists[t.lat+'-'+t.lng] = true;
+      return true;
+    }
+  });
+}
+
 function initMap() {
   
   $('#map').height($(window).height());
@@ -294,9 +306,10 @@ function initMap() {
       return t;
     });
 
+    tracks = removeDuplicates(tracks);
+
     //position
     var position = tracks.reverse()[0];
-    
     
     map.setCenter(position);
 
