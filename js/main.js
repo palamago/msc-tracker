@@ -272,7 +272,7 @@ function setTime(position){
 
 function removeDuplicates(tracks){
   var exists = {};
-  return tracks.filter(function(t){
+  return tracks.reverse().filter(function(t){
     if(exists[t.lat+'-'+t.lng]){
       return false
     } else {
@@ -309,7 +309,7 @@ function initMap() {
     tracks = removeDuplicates(tracks);
 
     //position
-    var position = tracks.reverse()[0];
+    var position = tracks[0];
     
     map.setCenter(position);
 
